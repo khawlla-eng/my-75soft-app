@@ -90,6 +90,10 @@
       background-color: #888;
     }
 
+    button.success {
+      background-color: #28a745;
+    }
+
     .loading-overlay {
       display: none;
       position: fixed;
@@ -155,7 +159,7 @@
       </div>
 
       <div class="btn-group" style="justify-content: flex-end;">
-        <button type="button" onclick="nextPage()">التالي ➔</button>
+        <button type="button" onclick="nextPage()">التالي (التمرين) ➔</button>
       </div>
     </div>
 
@@ -238,7 +242,8 @@
 
       <div class="btn-group">
         <button type="button" class="secondary" onclick="prevPage()">➔ السابق</button>
-        <button type="submit">إرسال البيانات</button>
+        <!-- زر إرسال واحد فقط يرسل بيانات الصفحة الأولى والثانية معاً -->
+        <button type="submit" class="success">إرسال البيانات</button>
       </div>
     </div>
 
@@ -248,7 +253,6 @@
 <div id="loadingOverlay" class="loading-overlay">جاري إرسال البيانات إلى Google Sheets...</div>
 
 <script>
-  // رابط Apps Script الخاص بكِ
   const scriptURL = 'https://script.google.com/macros/s/AKfycby0XUNLUQoEWmmpflLAOqLUjg4Z1zbcLcSHotl-mxu0fCla64nKSwIEppMLWymKmJeO8g/exec';
 
   function nextPage() {
