@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>75 Soft Micro-Sculpting</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #fdfbfb; color: #333; padding: 20px; text-align: center; }
+    .card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin: 10px 0; }
+    input, select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; }
+    button { background: #6c5ce7; color: white; border: none; font-weight: bold; cursor: pointer; }
+    .timer { font-size: 32px; font-weight: bold; color: #6c5ce7; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>🏋️‍♀️ تدوين الجلسة</h2>
+    <input type="text" id="exercise" placeholder="اسم التمرين (مثال: Dumbbell RDL)">
+    <input type="number" id="weight" placeholder="الوزن (kg)">
+    <input type="number" id="reps" placeholder="العدّات">
+    <input type="text" id="notes" placeholder="ملاحظات البشرة / الراحة">
+    <button onclick="sendData()">حفظ التكرار ✨</button>
+  </div>
+
+  <div class="card">
+    <h2>⏱️ تايمر الراحة</h2>
+    <div class="timer" id="timerDisplay">01:00</div>
+    <button onclick="startTimer(60)">بدء 60 ثانية</button>
+    <button onclick="startTimer(90)" style="background:#a29bfe;">بدء 90 ثانية</button>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "ضعـي_رابط_WEB_APP_URL_هنا";
+
+    function sendData() {
+      const data = {
+        exercise: document.getElementById('exercise').value,
+        weight: document.getElementById('weight').value,
+        reps: document.getElementById('reps').value,
+        notes: document.getElementById('notes').value
+      };
+      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+        .then(res => alert('تم التسجيل بنجاح! 🎉'))
+        .catch(err => alert('حدث خطأ!'));
+    }
+
+    function startTimer(seconds) {
+      let time = seconds;
+      const display = document.getElementById('timerDisplay');
+      const interval = setInterval(() => {
+        let mins = Math.floor(time / 60);
+        let secs = time % 60;
+        display.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        if (--time < 0) {
+          clearInterval(interval);
+          display.textContent = "انتهى الوقت! 💪";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
