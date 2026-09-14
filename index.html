@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌸 نموذج تتبع الصحة والتمارين</title>
+  <title>🌸 تطبيق تتبع الصحة والتمارين</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
 
@@ -16,6 +16,8 @@
       --accent-lilac: #E2F0CB;
       --text-color: #4A4A4A;
       --border-color: #E2E8F0;
+      --note-bg: #FFF5F5;
+      --note-border: #FFB7B2;
     }
 
     body {
@@ -32,7 +34,7 @@
     .container {
       background: var(--card-bg);
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       padding: 25px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -53,6 +55,14 @@
       margin-bottom: 25px;
       font-size: 20px;
       font-weight: 700;
+    }
+
+    h3 {
+      color: var(--primary-dark);
+      font-size: 16px;
+      margin-top: 20px;
+      border-bottom: 2px dashed var(--primary-pastel);
+      padding-bottom: 6px;
     }
 
     .form-group {
@@ -86,6 +96,51 @@
       box-shadow: 0 0 8px rgba(108, 92, 231, 0.15);
     }
 
+    .dynamic-note {
+      display: none;
+      background-color: var(--note-bg);
+      border-right: 4px solid var(--note-border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #721C24;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .water-note {
+      display: none;
+      background-color: #E8F4F8;
+      border-right: 4px solid #81D4FA;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #0277BD;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .exercise-card {
+      background-color: #FAFAFA;
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .exercise-card title {
+      font-weight: bold;
+      color: var(--primary-dark);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
     .btn-group {
       display: flex;
       gap: 12px;
@@ -108,20 +163,9 @@
       transform: scale(0.98);
     }
 
-    .btn-next {
-      background-color: var(--primary-pastel);
-      color: #2D5A27;
-    }
-
-    .btn-prev {
-      background-color: #E2E8F0;
-      color: #4A5568;
-    }
-
-    .btn-submit {
-      background-color: var(--accent-pink);
-      color: #8C4A27;
-    }
+    .btn-next { background-color: var(--primary-pastel); color: #2D5A27; }
+    .btn-prev { background-color: #E2E8F0; color: #4A5568; }
+    .btn-submit { background-color: var(--accent-pink); color: #8C4A27; }
 
     .loading-overlay {
       display: none;
@@ -136,6 +180,16 @@
       font-weight: 700;
       z-index: 1000;
     }
+
+    .fixed-info {
+      background-color: #F0E6EF;
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -148,8 +202,33 @@
       <h2>🌸 القياسات والجرعة الأسبوعية</h2>
       
       <div class="form-group">
-        <label>📅 الأسبوع:</label>
-        <input type="text" name="weekNumber" placeholder="مثال: الأسبوع 1">
+        <label>📅 الأسبوع (تحدي 75 يوم):</label>
+        <select id="weekNumber" name="weekNumber">
+          <option value="الأسبوع 1 (الأيام 1-7)">الأسبوع 1 (الأيام 1-7)</option>
+          <option value="الأسبوع 2 (الأيام 8-14)">الأسبوع 2 (الأيام 8-14)</option>
+          <option value="الأسبوع 3 (الأيام 15-21)">الأسبوع 3 (الأيام 15-21)</option>
+          <option value="الأسبوع 4 (الأيام 22-28)">الأسبوع 4 (الأيام 22-28)</option>
+          <option value="الأسبوع 5 (الأيام 29-35)">الأسبوع 5 (الأيام 29-35)</option>
+          <option value="الأسبوع 6 (الأيام 36-42)">الأسبوع 6 (الأيام 36-42)</option>
+          <option value="الأسبوع 7 (الأيام 43-49)">الأسبوع 7 (الأيام 43-49)</option>
+          <option value="الأسبوع 8 (الأيام 50-56)">الأسبوع 8 (الأيام 50-56)</option>
+          <option value="الأسبوع 9 (الأيام 57-63)">الأسبوع 9 (الأيام 57-63)</option>
+          <option value="الأسبوع 10 (الأيام 64-70)">الأسبوع 10 (الأيام 64-70)</option>
+          <option value="الأسبوع 11 (الأيام 71-75)">الأسبوع 11 (الأيام 71-75)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>📆 اليوم من الأسبوع:</label>
+        <select id="dayOfWeek" name="dayOfWeek">
+          <option value="الأحد">الأحد</option>
+          <option value="الإثنين">الإثنين</option>
+          <option value="الثلاثاء">الثلاثاء</option>
+          <option value="الأربعاء">الأربعاء</option>
+          <option value="الخميس">الخميس</option>
+          <option value="الجمعة">الجمعة</option>
+          <option value="السبت">السبت</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -158,8 +237,15 @@
       </div>
 
       <div class="form-group">
-        <label>🎀 الحالة الهرمونية / الدورة:</label>
-        <input type="text" name="cyclePhase" placeholder="أدخلي الحالة الهرمونية">
+        <label>🎀 الحالة الهرمونية:</label>
+        <select id="cyclePhase" name="cyclePhase" onchange="handleCycleChange()">
+          <option value="">-- اختاري الحالة --</option>
+          <option value="أيام عادية">أيام عادية</option>
+          <option value="فترة تبويض">فترة تبويض</option>
+          <option value="قبل الدورة">قبل الدورة</option>
+          <option value="أسبوع الدورة">أسبوع الدورة</option>
+        </select>
+        <div id="cycleNote" class="dynamic-note"></div>
       </div>
 
       <div class="form-group">
@@ -182,7 +268,8 @@
 
       <div class="form-group">
         <label>💧 كمية الماء (لتر):</label>
-        <input type="number" step="0.1" name="waterIntake" placeholder="مثال: 2.5">
+        <input type="number" step="0.1" id="waterIntake" name="waterIntake" placeholder="مثال: 2.5" oninput="handleWaterChange()">
+        <div id="waterNote" class="water-note"></div>
       </div>
 
       <div class="form-group">
@@ -200,77 +287,153 @@
     <div id="page2" class="page">
       <h2>🏋️‍♀️ بيانات التمرين اليومي</h2>
 
-      <div class="form-group">
-        <label>📆 اليوم:</label>
-        <select name="dayOfWeek">
-          <option value="الأحد">الأحد</option>
-          <option value="الإثنين">الإثنين</option>
-          <option value="الثلاثاء">الثلاثاء</option>
-          <option value="الأربعاء">الأربعاء</option>
-          <option value="الخميس">الخميس</option>
-          <option value="الجمعة">الجمعة</option>
-          <option value="السبت">السبت</option>
-        </select>
+      <div id="fixedDisplay" class="fixed-info">
+        <!-- يتم تحديثه تلقائياً -->
       </div>
 
       <div class="form-group">
         <label>🎯 نوع التمرين:</label>
-        <input type="text" name="workoutType" placeholder="مثال: الجزء العلوي / رجلين">
+        <select id="workoutType" name="workoutType" onchange="handleWorkoutTypeChange()">
+          <option value="">-- اختاري نوع التمرين --</option>
+          <option value="Upper Body">الجزء العلوي (Upper Body)</option>
+          <option value="Lower Body">الجزء السفلي (Lower Body)</option>
+        </select>
       </div>
 
-      <div class="form-group">
-        <label>💪 اسم التمرين:</label>
-        <input type="text" name="exerciseSelect" placeholder="مثال: Shoulder Press">
+      <!-- تذكير الإحماء -->
+      <div id="warmupNote" class="dynamic-note" style="background-color: #EBF8FF; border-right-color: #3182CE; color: #2B6CB0;">
       </div>
 
-      <div class="form-group">
-        <label>🏋️ الوزن المرفوع (kg):</label>
-        <input type="number" step="0.5" name="setWeight">
+      <!-- تمارين Upper Body -->
+      <div id="upperBodySection" style="display: none;">
+        <h3>💪 تمارين الجزء العلوي</h3>
+        
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">1. Chest Press / Push-ups</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="ex1_weight" placeholder="الوزن kg">
+            <input type="number" name="ex1_reps" placeholder="العدات Reps">
+            <input type="number" name="ex1_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">2. Lat Pulldown / Rows</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="ex2_weight" placeholder="الوزن kg">
+            <input type="number" name="ex2_reps" placeholder="العدات Reps">
+            <input type="number" name="ex2_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">3. Shoulder Press</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="ex3_weight" placeholder="الوزن kg">
+            <input type="number" name="ex3_reps" placeholder="العدات Reps">
+            <input type="number" name="ex3_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">4. Biceps Curls / Triceps Extensions</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="ex4_weight" placeholder="الوزن kg">
+            <input type="number" name="ex4_reps" placeholder="العدات Reps">
+            <input type="number" name="ex4_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>🔢 العدات (Reps):</label>
-        <input type="number" name="setReps">
+      <!-- تمارين Lower Body -->
+      <div id="lowerBodySection" style="display: none;">
+        <h3>🦵 تمارين الجزء السفلي</h3>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">1. Squats (سكوات)</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="leg1_weight" placeholder="الوزن kg">
+            <input type="number" name="leg1_reps" placeholder="العدات Reps">
+            <input type="number" name="leg1_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">2. Romanian Deadlifts (RDL)</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="leg2_weight" placeholder="الوزن kg">
+            <input type="number" name="leg2_reps" placeholder="العدات Reps">
+            <input type="number" name="leg2_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">3. Lunges (طعن)</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="leg3_weight" placeholder="الوزن kg">
+            <input type="number" name="leg3_reps" placeholder="العدات Reps">
+            <input type="number" name="leg3_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <span style="font-weight:bold; color:#6C5CE7;">4. Hip Thrust (هيب ثرست)</span>
+          <div class="grid-3" style="margin-top:6px;">
+            <input type="number" step="0.5" name="leg4_weight" placeholder="الوزن kg">
+            <input type="number" name="leg4_reps" placeholder="العدات Reps">
+            <input type="number" name="leg4_sets" placeholder="الجولات Sets">
+          </div>
+        </div>
       </div>
 
+      <!-- قسم الكارديو -->
+      <h3>🏃‍♀️ أجهزة الكارديو والتفاصيل</h3>
       <div class="form-group">
-        <label>🏃 جهاز الكارديو:</label>
-        <input type="text" name="cardioDevice" placeholder="Treadmill / Bike / لا يوجد">
+        <label>اختيار جهاز الكارديو:</label>
+        <select name="cardioDevice">
+          <option value="لا يوجد">بدون كارديو</option>
+          <option value="سير (Treadmill)">سير (Treadmill)</option>
+          <option value="دراجة (Stationary Bike)">دراجة (Stationary Bike)</option>
+          <option value="أوبتيكال (Elliptical)">أوبتيكال (Elliptical)</option>
+          <option value="درج (Stairmaster)">درج (Stairmaster)</option>
+        </select>
       </div>
 
-      <div class="form-group">
-        <label>⏱️ مدة الكارديو (دقائق):</label>
-        <input type="number" name="cardioDuration">
-      </div>
-
-      <div class="form-group">
-        <label>🔥 السعرات الحرارية:</label>
-        <input type="number" name="cardioCalories">
+      <div class="grid-3">
+        <div class="form-group">
+          <label>المدة (د):</label>
+          <input type="number" name="cardioDuration" placeholder="30">
+        </div>
+        <div class="form-group">
+          <label>السعرات:</label>
+          <input type="number" name="cardioCalories" placeholder="200">
+        </div>
+        <div class="form-group">
+          <label>السرعة:</label>
+          <input type="number" step="0.1" name="cardioSpeed" placeholder="5.5">
+        </div>
       </div>
 
       <div class="form-group">
         <label>💓 ضربات القلب (BPM):</label>
-        <input type="number" name="cardioBpm">
+        <input type="number" name="cardioBpm" placeholder="مثال: 135">
       </div>
 
+      <h3>✨ نشاط إضافي / كلاسات</h3>
       <div class="form-group">
-        <label>⚡ السرعة:</label>
-        <input type="number" step="0.1" name="cardioSpeed">
+        <label>نوع النشاط:</label>
+        <input type="text" name="extraActivity" placeholder="مشاة / بيلاتس / يوجا...">
       </div>
 
-      <div class="form-group">
-        <label>✨ نشاط إضافي / كلاسات:</label>
-        <input type="text" name="extraActivity" placeholder="مشاة / بيلاتس...">
-      </div>
-
-      <div class="form-group">
-        <label>🕒 وقت النشاط الإضافي:</label>
-        <input type="text" name="extraTime">
-      </div>
-
-      <div class="form-group">
-        <label>⏳ مدة النشاط الإضافي (دقائق):</label>
-        <input type="number" name="extraDuration">
+      <div class="grid-3">
+        <div class="form-group" style="grid-column: span 2;">
+          <label>وقت النشاط:</label>
+          <input type="text" name="extraTime" placeholder="مساءً / صباحاً">
+        </div>
+        <div class="form-group">
+          <label>المدة (د):</label>
+          <input type="number" name="extraDuration">
+        </div>
       </div>
 
       <div class="btn-group">
@@ -287,7 +450,73 @@
 <script>
   const scriptURL = 'https://script.google.com/macros/s/AKfycby0XUNLUQoEWmmpflLAOqLUjg4Z1zbcLcSHotl-mxu0fCla64nKSwIEppMLWymKmJeO8g/exec';
 
+  function handleCycleChange() {
+    const val = document.getElementById('cyclePhase').value;
+    const note = document.getElementById('cycleNote');
+    
+    if (val === 'قبل الدورة') {
+      note.style.display = 'block';
+      note.innerText = '🌸 قد تشعرين برغبة في أكل الحلويات، لا بأس بقطعة حلوى!';
+    } else if (val === 'فترة تبويض') {
+      note.style.display = 'block';
+      note.innerText = '🌟 قد تشعرين بأنك في أفضل حالاتك وقوتك!';
+    } else if (val === 'أسبوع الدورة') {
+      note.style.display = 'block';
+      note.innerText = '💆‍♀️ استمعي لجسدك ولا تضغطي على نفسك، ولا بأس بتمرة مع قرفة!';
+    } else {
+      note.style.display = 'none';
+    }
+  }
+
+  function handleWaterChange() {
+    const val = parseFloat(document.getElementById('waterIntake').value);
+    const note = document.getElementById('waterNote');
+
+    if (isNaN(val) || val <= 0) {
+      note.style.display = 'none';
+      return;
+    }
+
+    note.style.display = 'block';
+    if (val < 2) {
+      note.innerText = '💧 حاولي ولو نص إضافي!';
+    } else if (val === 2.5) {
+      note.innerText = '✨ أنت تستطيعين نص إضافي!';
+    } else if (val >= 3) {
+      note.innerText = '🎉 ممتاز للغاية (إنجاز عظيم يا جميلة!)';
+    } else {
+      note.style.display = 'none';
+    }
+  }
+
+  function handleWorkoutTypeChange() {
+    const val = document.getElementById('workoutType').value;
+    const warmup = document.getElementById('warmupNote');
+    const upper = document.getElementById('upperBodySection');
+    const lower = document.getElementById('lowerBodySection');
+
+    if (val === 'Upper Body') {
+      warmup.style.display = 'block';
+      warmup.innerText = '🔥 إحماء الجزء العلوي (5-8 دقائق): دوائر الذراعين، إحماء الأكتاف، وتمدد الظهر والصدر.';
+      upper.style.display = 'block';
+      lower.style.display = 'none';
+    } else if (val === 'Lower Body') {
+      warmup.style.display = 'block';
+      warmup.innerText = '🔥 إحماء الجزء السفلي (5-8 دقائق): سكوات بدون وزن، إحماء الحوض (Hip Openers)، وتمدد الفخذين.';
+      upper.style.display = 'none';
+      lower.style.display = 'block';
+    } else {
+      warmup.style.display = 'none';
+      upper.style.display = 'none';
+      lower.style.display = 'none';
+    }
+  }
+
   function nextPage() {
+    const week = document.getElementById('weekNumber').value;
+    const day = document.getElementById('dayOfWeek').value;
+    document.getElementById('fixedDisplay').innerText = `📌 ${week} - يوم ${day}`;
+
     document.getElementById('page1').classList.remove('active');
     document.getElementById('page2').classList.add('active');
     window.scrollTo(0, 0);
@@ -324,6 +553,8 @@
       loading.style.display = 'none';
       alert('✨ تم حفظ وإرسال البيانات بنجاح في Google Sheets!');
       form.reset();
+      document.getElementById('cycleNote').style.display = 'none';
+      document.getElementById('waterNote').style.display = 'none';
       prevPage();
     })
     .catch(error => {
