@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 نموذج تتبع الصحة والتمارين</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+    :root {
+      --bg-pastel: #FDFBF7;
+      --card-bg: #FFFFFF;
+      --primary-pastel: #B5EAD7;
+      --primary-dark: #6C5CE7;
+      --accent-pink: #FFDAC1;
+      --accent-lilac: #E2F0CB;
+      --text-color: #4A4A4A;
+      --border-color: #E2E8F0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--bg-pastel);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px 15px;
+      display: flex;
+      justify-content: center;
+      direction: rtl;
+    }
+
+    .container {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 480px;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      border: 1px solid #F0E6EF;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary-dark);
+      margin-bottom: 25px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #555;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-sizing: border-box;
+      font-size: 14px;
+      font-family: 'Tajawal', sans-serif;
+      background-color: #FAF9F6;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-dark);
+      background-color: #FFF;
+      box-shadow: 0 0 8px rgba(108, 92, 231, 0.15);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    button {
+      border: none;
+      padding: 13px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Tajawal', sans-serif;
+      flex: 1;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-next {
+      background-color: var(--primary-pastel);
+      color: #2D5A27;
+    }
+
+    .btn-prev {
+      background-color: #E2E8F0;
+      color: #4A5568;
+    }
+
+    .btn-submit {
+      background-color: var(--accent-pink);
+      color: #8C4A27;
+    }
+
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      color: var(--primary-dark);
+      text-align: center;
+      padding-top: 220px;
+      font-size: 18px;
+      font-weight: 700;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form id="trackerForm">
+    
+    <!-- الصفحة الأولى -->
+    <div id="page1" class="page active">
+      <h2>🌸 القياسات والجرعة الأسبوعية</h2>
+      
+      <div class="form-group">
+        <label>📅 الأسبوع:</label>
+        <input type="text" name="weekNumber" placeholder="مثال: الأسبوع 1">
+      </div>
+
+      <div class="form-group">
+        <label>⚖️ الوزن الأسبوعي (كجم):</label>
+        <input type="number" step="0.1" name="weeklyWeight" placeholder="مثال: 65.5">
+      </div>
+
+      <div class="form-group">
+        <label>🎀 الحالة الهرمونية / الدورة:</label>
+        <input type="text" name="cyclePhase" placeholder="أدخلي الحالة الهرمونية">
+      </div>
+
+      <div class="form-group">
+        <label>💉 أخذ الجرعة؟</label>
+        <select name="doseTaken">
+          <option value="نعم">نعم</option>
+          <option value="لا">لا</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>📍 تفاصيل / مكان الجرعة:</label>
+        <input type="text" name="doseLocation" placeholder="مثال: البطن - 0.5 ملغ">
+      </div>
+
+      <div class="form-group">
+        <label>📝 تغيرات وملاحظات الأسبوع:</label>
+        <textarea name="weeklyChanges" rows="2" placeholder="أي أعراض أو ملاحظات..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>💧 كمية الماء (لتر):</label>
+        <input type="number" step="0.1" name="waterIntake" placeholder="مثال: 2.5">
+      </div>
+
+      <div class="form-group">
+        <label>🥗 الالتزام بالأكل والبروتين:</label>
+        <input type="text" name="dietCommitment" placeholder="ممتاز / متوسط">
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn-submit" onclick="sendData()">💾 حفظ وإرسال البيانات</button>
+        <button type="button" class="btn-next" onclick="nextPage()">التالي (التمرين) ➔</button>
+      </div>
+    </div>
+
+    <!-- الصفحة الثانية -->
+    <div id="page2" class="page">
+      <h2>🏋️‍♀️ بيانات التمرين اليومي</h2>
+
+      <div class="form-group">
+        <label>📆 اليوم:</label>
+        <select name="dayOfWeek">
+          <option value="الأحد">الأحد</option>
+          <option value="الإثنين">الإثنين</option>
+          <option value="الثلاثاء">الثلاثاء</option>
+          <option value="الأربعاء">الأربعاء</option>
+          <option value="الخميس">الخميس</option>
+          <option value="الجمعة">الجمعة</option>
+          <option value="السبت">السبت</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>🎯 نوع التمرين:</label>
+        <input type="text" name="workoutType" placeholder="مثال: الجزء العلوي / رجلين">
+      </div>
+
+      <div class="form-group">
+        <label>💪 اسم التمرين:</label>
+        <input type="text" name="exerciseSelect" placeholder="مثال: Shoulder Press">
+      </div>
+
+      <div class="form-group">
+        <label>🏋️ الوزن المرفوع (kg):</label>
+        <input type="number" step="0.5" name="setWeight">
+      </div>
+
+      <div class="form-group">
+        <label>🔢 العدات (Reps):</label>
+        <input type="number" name="setReps">
+      </div>
+
+      <div class="form-group">
+        <label>🏃 جهاز الكارديو:</label>
+        <input type="text" name="cardioDevice" placeholder="Treadmill / Bike / لا يوجد">
+      </div>
+
+      <div class="form-group">
+        <label>⏱️ مدة الكارديو (دقائق):</label>
+        <input type="number" name="cardioDuration">
+      </div>
+
+      <div class="form-group">
+        <label>🔥 السعرات الحرارية:</label>
+        <input type="number" name="cardioCalories">
+      </div>
+
+      <div class="form-group">
+        <label>💓 ضربات القلب (BPM):</label>
+        <input type="number" name="cardioBpm">
+      </div>
+
+      <div class="form-group">
+        <label>⚡ السرعة:</label>
+        <input type="number" step="0.1" name="cardioSpeed">
+      </div>
+
+      <div class="form-group">
+        <label>✨ نشاط إضافي / كلاسات:</label>
+        <input type="text" name="extraActivity" placeholder="مشاة / بيلاتس...">
+      </div>
+
+      <div class="form-group">
+        <label>🕒 وقت النشاط الإضافي:</label>
+        <input type="text" name="extraTime">
+      </div>
+
+      <div class="form-group">
+        <label>⏳ مدة النشاط الإضافي (دقائق):</label>
+        <input type="number" name="extraDuration">
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn-prev" onclick="prevPage()">➔ العودة للقياسات</button>
+        <button type="button" class="btn-submit" onclick="sendData()">💾 حفظ وإرسال الكل</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<div id="loadingOverlay" class="loading-overlay">🌸 جاري إرسال البيانات إلى Google Sheets...</div>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycby0XUNLUQoEWmmpflLAOqLUjg4Z1zbcLcSHotl-mxu0fCla64nKSwIEppMLWymKmJeO8g/exec';
+
+  function nextPage() {
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function prevPage() {
+    document.getElementById('page2').classList.remove('active');
+    document.getElementById('page1').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function sendData() {
+    const loading = document.getElementById('loadingOverlay');
+    const form = document.getElementById('trackerForm');
+    
+    loading.style.display = 'block';
+
+    const formData = new FormData(form);
+    const searchParams = new URLSearchParams();
+
+    for (const pair of formData.entries()) {
+      searchParams.append(pair[0], pair[1]);
+    }
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: searchParams.toString()
+    })
+    .then(() => {
+      loading.style.display = 'none';
+      alert('✨ تم حفظ وإرسال البيانات بنجاح في Google Sheets!');
+      form.reset();
+      prevPage();
+    })
+    .catch(error => {
+      loading.style.display = 'none';
+      alert('حدث خطأ أثناء الإرسال: ' + error.message);
+    });
+  }
+</script>
+
+</body>
+</html>
