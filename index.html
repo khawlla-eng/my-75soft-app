@@ -66,7 +66,7 @@
 
     .btn-group {
       display: flex;
-      justify-content: space-between;
+      gap: 10px;
       margin-top: 20px;
     }
 
@@ -74,12 +74,12 @@
       background-color: var(--primary-color);
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px 15px;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
-      width: 48%;
+      flex: 1;
     }
 
     button:hover {
@@ -103,6 +103,7 @@
       text-align: center;
       padding-top: 200px;
       font-size: 20px;
+      z-index: 1000;
     }
   </style>
 </head>
@@ -158,7 +159,8 @@
         <input type="text" id="dietCommitment" name="dietCommitment" placeholder="ممتاز / متوسط">
       </div>
 
-      <div class="btn-group" style="justify-content: flex-end;">
+      <div class="btn-group">
+        <button type="button" class="success" onclick="sendData()">حفظ وإرسال الصفحة 1</button>
         <button type="button" onclick="nextPage()">التالي (التمرين) ➔</button>
       </div>
     </div>
@@ -242,7 +244,7 @@
 
       <div class="btn-group">
         <button type="button" class="secondary" onclick="prevPage()">➔ السابق</button>
-        <button type="submit" class="success">إرسال البيانات</button>
+        <button type="button" class="success" onclick="sendData()">حفظ وإرسال الكل</button>
       </div>
     </div>
 
@@ -266,25 +268,38 @@
     window.scrollTo(0, 0);
   }
 
-  const form = document.getElementById('trackerForm');
-  const loading = document.getElementById('loadingOverlay');
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
+  function sendData() {
+    const loading = document.getElementById('loadingOverlay');
+    const form = document.getElementById('trackerForm');
+    
     loading.style.display = 'block';
 
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => {
-        loading.style.display = 'none';
-        alert('تم حفظ البيانات بنجاح في Google Sheets!');
-        form.reset();
-        prevPage();
-      })
-      .catch(error => {
-        loading.style.display = 'none';
-        alert('حدث خطأ أثناء الإرسال: ' + error.message);
-      });
-  });
+    const formData = new FormData(form);
+    const searchParams = new URLSearchParams();
+
+    for (const pair of formData.entries()) {
+      searchParams.append(pair[0], pair[1]);
+    }
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: searchParams.toString()
+    })
+    .then(() => {
+      loading.style.display = 'none';
+      alert('تم إرسال البيانات بنجاح إلى Google Sheets!');
+      form.reset();
+      prevPage();
+    })
+    .catch(error => {
+      loading.style.display = 'none';
+      alert('حدث خطأ أثناء الإرسال: ' + error.message);
+    });
+  }
 </script>
 
 </body>
