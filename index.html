@@ -242,7 +242,6 @@
 
       <div class="btn-group">
         <button type="button" class="secondary" onclick="prevPage()">➔ السابق</button>
-        <!-- زر إرسال واحد فقط يرسل بيانات الصفحة الأولى والثانية معاً -->
         <button type="submit" class="success">إرسال البيانات</button>
       </div>
     </div>
@@ -258,11 +257,13 @@
   function nextPage() {
     document.getElementById('page1').classList.remove('active');
     document.getElementById('page2').classList.add('active');
+    window.scrollTo(0, 0);
   }
 
   function prevPage() {
     document.getElementById('page2').classList.remove('active');
     document.getElementById('page1').classList.add('active');
+    window.scrollTo(0, 0);
   }
 
   const form = document.getElementById('trackerForm');
