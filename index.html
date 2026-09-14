@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khawla Soft 75 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-pastel: #fff8f9;
+      --card-bg: #ffffff;
+      --pink-pastel: #ffd1dc;
+      --pink-accent: #f8a5c2;
+      --lavender: #e8dff5;
+      --purple-accent: #b39ddb;
+      --sage-green: #e8f5e9;
+      --cream: #fff9e6;
+      --text-main: #4a4a4a;
+      --text-muted: #7d7d7d;
+      --border-color: #f3e5f5;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--bg-pastel);
+      color: var(--text-main);
+      margin: 0;
+      padding: 15px;
+      padding-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 550px;
+    }
+
+    .header-title {
+      text-align: center;
+      font-family: 'Playfair Display', 'Tajawal', serif;
+      color: #d81b60;
+      font-size: 2rem;
+      margin: 15px 0 25px 0;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 20px rgba(248, 165, 194, 0.12);
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #8e24aa;
+      margin-top: 0;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px dashed #f8bbd0;
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="time"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid #f8bbd0;
+      background-color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #ab47bc;
+      box-shadow: 0 0 8px rgba(171, 71, 188, 0.2);
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
+
+    .pill-box {
+      background: var(--sage-green);
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 10px;
+      border: 1px solid #c8e6c9;
+    }
+
+    .timer-display {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #8e24aa;
+      text-align: center;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #f8a5c2, #b39ddb);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: 'Tajawal', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(179, 157, 219, 0.4);
+      transition: transform 0.1s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #e8dff5, #ffd1dc);
+      color: #6a1b9a;
+    }
+
+    .btn-timer {
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      border-radius: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--lavender);
+      color: #4a148c;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <h1 class="header-title">Khawla Soft 75 🌸</h1>
+
+  <!-- 1. بداية الأسبوع والقياسات -->
+  <div class="section-card">
+    <div class="section-title"><span>🎀</span> تسجيل بداية الأسبوع والجرعة</div>
+    
+    <div class="row">
+      <div class="form-group">
+        <label>الأسبوع 🗓️</label>
+        <select id="weekNumber">
+          <option value="">اختر الأسبوع</option>
+          <option value="1">الأسبوع 1</option>
+          <option value="2">الأسبوع 2</option>
+          <option value="3">الأسبوع 3</option>
+          <option value="4">الأسبوع 4</option>
+          <option value="5">الأسبوع 5</option>
+          <option value="6">الأسبوع 6</option>
+          <option value="7">الأسبوع 7</option>
+          <option value="8">الأسبوع 8</option>
+          <option value="9">الأسبوع 9</option>
+          <option value="10">الأسبوع 10</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>الوزن (kg) ⚖️</label>
+        <input type="number" id="weeklyWeight" step="0.1" placeholder="مثال: 62.5">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>الحالة الهرمونية 🌸</label>
+      <select id="cyclePhase">
+        <option value="none">اختر الفتره</option>
+        <option value="before">أسبوع قبل الدورة</option>
+        <option value="during">أسبوع الدورة</option>
+        <option value="after">أسبوع بعد الدورة</option>
+        <option value="normal">أيام طبيعية</option>
+      </select>
+    </div>
+
+    <div class="pill-box">
+      <label>متابعة الجرعة 💉</label>
+      <div class="row">
+        <div class="form-group" style="margin-bottom:0;">
+          <select id="doseTaken">
+            <option value="no">لم يتم أخذ الجرعة</option>
+            <option value="yes">تم أخذ الجرعة ✨</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="text" id="doseLocation" placeholder="المكان والوقت">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:10px;">
+      <label>تغيرات ملاحظة هذا الأسبوع 📝</label>
+      <textarea id="weeklyChanges" rows="2" placeholder="ملاحظات البشرة، النشاط، أو المقاسات..."></textarea>
+    </div>
+  </div>
+
+  <!-- 2. تحديد اليوم ونوع التمرين -->
+  <div class="section-card">
+    <div class="section-title"><span>🩰</span> جدول يوم التمرين</div>
+    
+    <div class="row">
+      <div class="form-group">
+        <label>اليوم 📅</label>
+        <select id="dayOfWeek">
+          <option value="الأحد">الأحد</option>
+          <option value="الإثنين">الإثنين</option>
+          <option value="الثلاثاء">الثلاثاء</option>
+          <option value="الأربعاء">الأربعاء</option>
+          <option value="الخميس">الخميس</option>
+          <option value="الجمعة">الجمعة</option>
+          <option value="السبت">السبت</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>تمرين اليوم 🏋️‍♀️</label>
+        <select id="workoutType" onchange="updateWorkoutPlan()">
+          <option value="">اختر نوع التمرين</option>
+          <option value="upper">Upper Body 🌸</option>
+          <option value="lower">Lower Body 🩰</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- تمارين الإحماء المقترحة -->
+    <div id="warmupBox" class="pill-box" style="display:none; background: var(--cream); border-color:#ffe082;">
+      <span class="badge">تمارين الإحماء المقترحة 🧘‍♀️</span>
+      <div id="warmupDetails" style="font-size:0.9rem; line-height:1.6;"></div>
+    </div>
+  </div>
+
+  <!-- 3. تدوين الجلسة والتكرارات -->
+  <div class="section-card">
+    <div class="section-title"><span>💪</span> تدوين الجلسة والعدات</div>
+    
+    <div class="form-group">
+      <label>التمرين الحالي 📌</label>
+      <select id="exerciseSelect">
+        <option value="">اختر التمرين أو اكتبه</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>الوزن (kg) 🏋️</label>
+        <input type="number" id="setWeight" placeholder="0.0">
+      </div>
+      <div class="form-group">
+        <label>التكرارات (Reps) 🔄</label>
+        <input type="number" id="setReps" placeholder="12">
+      </div>
+    </div>
+
+    <!-- تايمر الراحة -->
+    <div style="background: var(--lavender); padding:15px; border-radius:15px; margin: 15px 0;">
+      <label style="text-align:center;">⏱️ تايمر الراحة بين الجلسات</label>
+      <div class="timer-display" id="timerDisplay">01:00</div>
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-timer" onclick="startTimer(60)">60 ثانية</button>
+        <button class="btn btn-secondary btn-timer" onclick="startTimer(90)">90 ثانية</button>
+        <button class="btn btn-secondary btn-timer" onclick="resetTimer()">إيقاف 🛑</button>
+      </div>
+    </div>
+
+    <button class="btn" onclick="saveSet()">حفظ التكرار ✨</button>
+  </div>
+
+  <!-- 4. نشاط الكارديو -->
+  <div class="section-card">
+    <div class="section-title"><span>🏃‍♀️</span> نشاط الكارديو</div>
+    
+    <div class="form-group">
+      <label>جهاز الكارديو 🚴‍♀️</label>
+      <select id="cardioDevice">
+        <option value="none">بدون كارديو</option>
+        <option value="treadmill">جهاز ركض / مشي (Treadmill)</option>
+        <option value="elliptical">اليبتيكال (Elliptical)</option>
+
+        <option value="bike">دراجه ثابتة (Stationary Bike)</option>
+        <option value="outdoor_walk">مشي خارجي (Outdoor Walk)</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>المدة (دقيقة) ⏱️</label>
+        <input type="number" id="cardioDuration" placeholder="30">
+      </div>
+      <div class="form-group">
+        <label>السعرات الحرارية 🔥</label>
+        <input type="number" id="cardioCalories" placeholder="200">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>متوسط ضربات القلب ❤️</label>
+        <input type="number" id="cardioBpm" placeholder="135">
+      </div>
+      <div class="form-group">
+        <label>متوسط السرعة ⚡</label>
+        <input type="number" step="0.1" id="cardioSpeed" placeholder="5.5">
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. قسم إضافي لكلاسات الويك إند -->
+  <div class="section-card">
+    <div class="section-title"><span>✨</span> كلاسات ونشاط إضافي (الويك إند)</div>
+    
+    <div class="form-group">
+      <label>اسم الكلاس / النشاط 🧘‍♀️</label>
+      <input type="text" id="extraActivity" placeholder="مثال: Pilates, Yoga, Spinning...">
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>اليوم والوقت 🕒</label>
+        <input type="text" id="extraTime" placeholder="السبت مساءً">
+      </div>
+      <div class="form-group">
+        <label>المدة (دقيقة) ⏱️</label>
+        <input type="number" id="extraDuration" placeholder="45">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // قوائم التمارين المقترحة والإحماء
+  const workoutData = {
+    upper: {
+      warmup: "• إحماء أكتاف وطهر: 5 دقائق<br>• Dynamic Stretch للأذرع<br>• 2 جلسة تفعيل بحبل المقاومة",
+      exercises: ["Dumbbell Shoulder Press", "Lat Pulldown", "Chest Press", "Bicep Curls", "Tricep Extension", "Lateral Raises"]
+    },
+    lower: {
+      warmup: "• مشي خفيف: 5 دقائق<br>• Glute Bridges لتفعيل العضلات<br>• Dynamic Leg Swings",
+      exercises: ["Dumbbell RDLs", "Goblet Squats", "Leg Press", "Walking Lunges", "Hip Thrusts", "Calf Raises"]
+    }
+  };
+
+  function updateWorkoutPlan() {
+    const type = document.getElementById('workoutType').value;
+    const warmupBox = document.getElementById('warmupBox');
+    const warmupDetails = document.getElementById('warmupDetails');
+    const exerciseSelect = document.getElementById('exerciseSelect');
+
+    exerciseSelect.innerHTML = '<option value="">اختر التمرين أو اكتبه</option>';
+
+    if (type && workoutData[type]) {
+      warmupBox.style.display = 'block';
+      warmupDetails.innerHTML = workoutData[type].warmup;
+
+      workoutData[type].exercises.forEach(ex => {
+        const option = document.createElement('option');
+        option.value = ex;
+        option.textContent = ex;
+        exerciseSelect.appendChild(option);
+      });
+    } else {
+      warmupBox.style.display = 'none';
+    }
+  }
+
+  // تايمر الراحة
+  let timerInterval;
+  function startTimer(seconds) {
+    clearInterval(timerInterval);
+    let timeLeft = seconds;
+    const display = document.getElementById('timerDisplay');
+    
+    timerInterval = setInterval(() => {
+      let mins = Math.floor(timeLeft / 60);
+      let secs = timeLeft % 60;
+      display.textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        display.textContent = "انتهى الوقت! 🎉";
+      }
+      timeLeft--;
+    }, 1000);
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    document.getElementById('timerDisplay').textContent = "01:00";
+  }
+
+  function saveSet() {
+    alert("تم تسجيل البيانات بنجاح! ✨🌸");
+  }
+</script>
+
+</body>
+</html>
